@@ -5,7 +5,7 @@ metadata:
     capabilities: Full Lifecycle
     categories: Integration & Delivery
     containerImage: quay.io/alecmerdler/quay-operator@sha256:eeee608c763a302ef2ac709edb42dcf679c4533b0b27ba5a7ca5bd149a5dcf32
-    createdAt: 2020-07-20 00:00:00
+    createdAt: 2020-08-24 00:00:00
     description: Opinionated deployment of Quay on Kubernetes.
     repository: https://github.com/quay/quay-operator
     tectonic-visibility: ocs

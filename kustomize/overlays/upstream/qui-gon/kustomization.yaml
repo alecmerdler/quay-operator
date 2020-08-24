@@ -6,7 +6,8 @@ commonAnnotations:
 bases:
   - ../../../tmp
 images:
+  # FIXME(alecmerdler): Testing notifications
   - name: quay.io/projectquay/quay
-    newTag: qui-gon
+    newTag: clair-notifications
   - name: quay.io/projectquay/clair
-    newTag: qui-gon
+    newTag: notifier-rc09

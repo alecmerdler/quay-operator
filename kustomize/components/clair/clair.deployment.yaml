@@ -15,7 +15,6 @@ spec:
         quay-component: clair
     spec:
       containers:
-        # - image: quay.io/projectquay/clair:4.0.0-alpha.4
         - image: quay.io/projectquay/clair
           imagePullPolicy: IfNotPresent
           name: clair
@@ -24,6 +23,9 @@ spec:
               value: /clair/config.yaml
             - name: CLAIR_MODE
               value: combo
+            # FIXME(alecmerdler): Testing notifications
+            - name: NOTIFIER_TEST_MODE
+              value: "true"
           ports:
             - containerPort: 8080
               name: clair-http

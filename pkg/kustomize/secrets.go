@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-logr/logr"
 	"github.com/quay/clair/v4/config"
+	"github.com/quay/clair/v4/notifier/webhook"
 	"github.com/quay/config-tool/pkg/lib/fieldgroups/database"
 	"github.com/quay/config-tool/pkg/lib/fieldgroups/distributedstorage"
 	"github.com/quay/config-tool/pkg/lib/fieldgroups/hostsettings"
@@ -220,6 +221,18 @@ func clairConfigFor(quay *v1.QuayRegistry) []byte {
 			MaxConnPool: 100,
 			Migrations:  true,
 			IndexerAddr: "clair-indexer",
+		},
+		Notifier: config.Notifier{
+			IndexerAddr:      "clair-indexer",
+			MatcherAddr:      "clair-matcher",
+			ConnString:       fmt.Sprintf("host=%s port=5432 dbname=%s user=%s password=%s sslmode=disable", host, dbname, user, password),
+			Migrations:       true,
+			DeliveryInterval: "5s",
+			PollInterval:     "15s",
+			Webbook: &webhook.Config{
+				Target:   quay.GetName() + "-quay-app/secscan/notification",
+				Callback: "clair-notifier/api/v1/notifications",
+			},
 		},
 		Metrics: config.Metrics{
 			Name: "prometheus",
