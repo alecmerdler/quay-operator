@@ -12,7 +12,8 @@ secretGenerator:
     literals:
       - create-extensions.sql=CREATE EXTENSION pg_trgm;
     files:
-      - restore.sh=./restore.sh
+      - ./restore.sh
+      - ./create-extensions.sh
 vars:
   - name: POSTGRES_DEPLOYMENT_NAME
     objref:

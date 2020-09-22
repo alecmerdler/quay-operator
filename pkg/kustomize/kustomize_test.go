@@ -332,7 +332,7 @@ var inflateTests = []struct {
 				},
 			},
 			Spec: v1.QuayRegistrySpec{
-				DesiredVersion: v1.QuayVersionQuiGon,
+				DesiredVersion: v1.QuayVersionVader,
 				Components: []v1.Component{
 					{Kind: "postgres", Managed: true},
 					{Kind: "clair", Managed: true},

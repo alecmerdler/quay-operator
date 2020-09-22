@@ -18,6 +18,9 @@ spec:
         - name: postgres-data
           persistentVolumeClaim:
             claimName: clair-postgres
+      securityContext:
+        fsGroup: 0
+        defaultMode: 0740
       containers:
         - name: postgres
           image: postgres:latest
@@ -26,14 +29,12 @@ spec:
             - containerPort: 5432
               protocol: TCP
           env:
-            - name: POSTGRES_USER
+            - name: POSTGRESQL_USER
               value: postgres
-            - name: POSTGRES_DB
+            - name: POSTGRESQL_DATABASE
               value: clair
-            - name: POSTGRES_PASSWORD
+            - name: POSTGRESQL_PASSWORD
               value: postgres
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
           volumeMounts:
             - name: postgres-data
-              mountPath: /var/lib/postgresql/data
+              mountPath: /var/lib/pgsql/data

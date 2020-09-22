@@ -47,11 +47,11 @@ func appDir() string {
 }
 
 func overlayDir(desiredVersion v1.QuayVersion) string {
-	return filepath.Join(kustomizeDir(), "overlays", "upstream", string(desiredVersion))
+	return filepath.Join(kustomizeDir(), "overlays", string(desiredVersion.Stream()), string(desiredVersion))
 }
 
 func upgradeOverlayDir(desiredVersion v1.QuayVersion) string {
-	return filepath.Join(kustomizeDir(), "overlays", "upstream", string(desiredVersion), "upgrade")
+	return filepath.Join(kustomizeDir(), "overlays", string(desiredVersion.Stream()), string(desiredVersion), "upgrade")
 }
 
 func check(err error) {
