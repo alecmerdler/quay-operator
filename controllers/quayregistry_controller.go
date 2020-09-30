@@ -271,5 +271,7 @@ func (r *QuayRegistryReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&quayredhatcomv1.QuayRegistry{}).
 		// TODO(alecmerdler): Add `.Owns()` for every resource type we manage...
+		// FIXME(alecmerdler): Ensure it doesn't re-queue for non-owner-referenced objects...
+		Owns(&appsv1.Deployment{}).
 		Complete(r)
 }
