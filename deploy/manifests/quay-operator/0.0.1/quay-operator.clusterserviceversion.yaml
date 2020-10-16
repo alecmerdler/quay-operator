@@ -4,7 +4,7 @@ metadata:
   annotations:
     capabilities: Full Lifecycle
     categories: Integration & Delivery
-    containerImage: quay.io/projectquay/quay-operator@sha256:4f88b7231dcac284893e7c6371ee631fccf592b553d0df76e624068bc9bb7553
+    containerImage: quay.io/quay/quay-operator@sha256:d819d0277d6af4be4ec27cd6a741da207913c4b5489825087442e7d0b159a37e
     createdAt: 2020-08-24 00:00:00
     description: Opinionated deployment of Quay on Kubernetes.
     repository: https://github.com/quay/quay-operator
@@ -32,7 +32,7 @@ metadata:
           }
         }
       ]
-  name: quay-operator.v0.0.1
+  name: quay-operator.v3.4.0
   namespace: placeholder
 spec:
   customresourcedefinitions:
@@ -120,7 +120,7 @@ spec:
                 # NOTE: This controls the default value for `desiredVersion` if left blank.
                 - name: DEFAULT_STREAM
                   value: downstream
-                image: quay.io/projectquay/quay-operator@sha256:4f88b7231dcac284893e7c6371ee631fccf592b553d0df76e624068bc9bb7553
+                image: quay.io/quay/quay-operator@sha256:d819d0277d6af4be4ec27cd6a741da207913c4b5489825087442e7d0b159a37e
                 name: quay-operator
                 volumeMounts:
                 - mountPath: /workspace/kustomize/overlays/upstream/dev/kustomization.yaml
@@ -571,4 +571,4 @@ spec:
     matchLabels:
       alm-owner-quay-operator: quay-operator
       operated-by: quay-operator
-  version: 0.0.1
+  version: 3.4.0

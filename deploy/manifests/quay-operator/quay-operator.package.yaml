@@ -1,5 +1,5 @@
 channels:
-- currentCSV: quay-operator.v0.0.1
-  name: alpha
-defaultChannel: alpha
+- currentCSV: quay-operator.v3.4.0
+  name: v3.4
+defaultChannel: v3.4
 packageName: quay-tng

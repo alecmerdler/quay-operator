@@ -22,34 +22,32 @@ spec:
           secret:
             secretName: postgres-bootstrap
             items:
-              - key: create-extensions.sh
-                path: create-extensions.sh
+              - key: create-extensions.sql
+                path: create-extensions.sql
               - key: restore.sh
                 path: restore.sh
-      securityContext:
-        fsGroup: 0
-        # FIXME(alecmerdler): This is not being marshaled from octal correctly (probably due to our YAML library) and is turing into `420`
-        defaultMode: 0740
       containers:
         - name: postgres
           image: postgres:latest
           imagePullPolicy: IfNotPresent
+          args: [
+            "-c", "shared_buffers=256MB",
+            "-c", "max_connections=2000",
+          ]
           ports:
             - containerPort: 5432
               protocol: TCP
           env:
-            - name: POSTGRESQL_USER
+            - name: POSTGRES_USER
               value: $(POSTGRES_DEPLOYMENT_NAME)
-            - name: POSTGRESQL_DATABASE
+            - name: POSTGRES_DB
               value: $(POSTGRES_DEPLOYMENT_NAME)
-            - name: POSTGRESQL_PASSWORD
+            - name: POSTGRES_PASSWORD
               value: postgres
-            - name: POSTGRESQL_SHARED_BUFFERS
-              value: 256MB
-            - name: POSTGRESQL_MAX_CONNECTIONS
-              value: "2000"
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           volumeMounts:
             - name: postgres-data
-              mountPath: /var/lib/pgsql/data
+              mountPath: /var/lib/postgresql/data
             - name: postgres-bootstrap
-              mountPath: /opt/app-root/src/postgresql-init
+              mountPath: /docker-entrypoint-initdb.d

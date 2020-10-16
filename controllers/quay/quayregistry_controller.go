@@ -44,7 +44,7 @@ import (
 )
 
 const upgradePollInterval = time.Second * 10
-const upgradePollTimeout = time.Second * 120
+const upgradePollTimeout = time.Second * 180
 
 // QuayRegistryReconciler reconciles a QuayRegistry object
 type QuayRegistryReconciler struct {

@@ -16,9 +16,3 @@ images:
   - name: quay.io/projectquay/clair
     newName: quay.io/quay/clair
     newTag: v3.4.0-osbs
-  - name: redis
-    newName: registry.access.redhat.com/rhscl/redis-32-rhel7
-  - name: postgres
-    newName: registry.access.redhat.com/rhscl/postgresql-10-rhel7
-    newTag: 1-35
-  # FIXME(alecmerdler): Need to handle `redhat-pull-secret` (potentially with a `secretGenerator`?)...
