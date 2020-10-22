@@ -1,1 +1,7 @@
 SERVER_HOSTNAME: registry.skynet-dev.com
+
+# FIXME(alecmerdler): Testing Clair v2 fallback
+FEATURE_SECURITY_NOTIFICATIONS: true
+FEATURE_SECURITY_SCANNER: true
+SECURITY_SCANNER_ENDPOINT: https://old-clair.skynet-migrate.svc:6060
+SECURITY_SCANNER_ISSUER_NAME: security_scanner
