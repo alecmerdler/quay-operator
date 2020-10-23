@@ -66,76 +66,11 @@ var kustomizationForTests = []struct {
 		},
 		"",
 	},
+	// TODO(alecmerdler): Test image overrides.
 	{
-		"InvalidDesiredVersion",
-		&v1.QuayRegistry{
-			ObjectMeta: metav1.ObjectMeta{
-				Annotations: map[string]string{
-					v1.SupportsObjectStorageAnnotation: "true",
-				},
-			},
-			Spec: v1.QuayRegistrySpec{
-				DesiredVersion: "not-a-real-version",
-				Components: []v1.Component{
-					{Kind: "postgres", Managed: true},
-					{Kind: "clair", Managed: true},
-					{Kind: "redis", Managed: true},
-					{Kind: "objectstorage", Managed: true},
-					{Kind: "mirror", Managed: true},
-				},
-			},
-		},
-		&types.Kustomization{
-			TypeMeta: types.TypeMeta{
-				APIVersion: types.KustomizationVersion,
-				Kind:       types.KustomizationKind,
-			},
-			Resources: []string{},
-			Components: []string{
-				"../components/postgres",
-				"../components/clair",
-				"../components/redis",
-				"../components/objectstorage",
-				"../components/mirror",
-			},
-			SecretGenerator: []types.SecretArgs{},
-		},
-		"",
-	},
-	{
-		"ValidDesiredVersion",
-		&v1.QuayRegistry{
-			ObjectMeta: metav1.ObjectMeta{
-				Annotations: map[string]string{
-					v1.SupportsObjectStorageAnnotation: "true",
-				},
-			},
-			Spec: v1.QuayRegistrySpec{
-				DesiredVersion: v1.QuayVersionVader,
-				Components: []v1.Component{
-					{Kind: "postgres", Managed: true},
-					{Kind: "clair", Managed: true},
-					{Kind: "redis", Managed: true},
-					{Kind: "objectstorage", Managed: true},
-					{Kind: "mirror", Managed: true},
-				},
-			},
-		},
-		&types.Kustomization{
-			TypeMeta: types.TypeMeta{
-				APIVersion: types.KustomizationVersion,
-				Kind:       types.KustomizationKind,
-			},
-			Resources: []string{},
-			Components: []string{
-				"../components/postgres",
-				"../components/clair",
-				"../components/redis",
-				"../components/objectstorage",
-				"../components/mirror",
-			},
-			SecretGenerator: []types.SecretArgs{},
-		},
+		"ComponentImageOverrides",
+		nil,
+		nil,
 		"",
 	},
 }
@@ -263,7 +198,6 @@ var inflateTests = []struct {
 				},
 			},
 			Spec: v1.QuayRegistrySpec{
-				DesiredVersion: v1.QuayVersionVader,
 				Components: []v1.Component{
 					{Kind: "postgres", Managed: true},
 					{Kind: "clair", Managed: true},
@@ -285,7 +219,6 @@ var inflateTests = []struct {
 		"AllComponentsUnmanaged",
 		&v1.QuayRegistry{
 			Spec: v1.QuayRegistrySpec{
-				DesiredVersion: v1.QuayVersionVader,
 				Components: []v1.Component{
 					{Kind: "postgres", Managed: false},
 					{Kind: "clair", Managed: false},
@@ -307,7 +240,6 @@ var inflateTests = []struct {
 		"SomeComponentsUnmanaged",
 		&v1.QuayRegistry{
 			Spec: v1.QuayRegistrySpec{
-				DesiredVersion: v1.QuayVersionVader,
 				Components: []v1.Component{
 					{Kind: "postgres", Managed: true},
 					{Kind: "clair", Managed: true},
@@ -326,7 +258,7 @@ var inflateTests = []struct {
 		nil,
 	},
 	{
-		"DesiredVersion",
+		"CurrentVersion",
 		&v1.QuayRegistry{
 			ObjectMeta: metav1.ObjectMeta{
 				Annotations: map[string]string{
@@ -334,7 +266,6 @@ var inflateTests = []struct {
 				},
 			},
 			Spec: v1.QuayRegistrySpec{
-				DesiredVersion: v1.QuayVersionVader,
 				Components: []v1.Component{
 					{Kind: "postgres", Managed: true},
 					{Kind: "clair", Managed: true},
@@ -343,13 +274,16 @@ var inflateTests = []struct {
 					{Kind: "mirror", Managed: true},
 				},
 			},
+			Status: v1.QuayRegistryStatus{
+				CurrentVersion: v1.QuayVersionCurrent,
+			},
 		},
 		&corev1.Secret{
 			Data: map[string][]byte{
 				"config.yaml": encode(map[string]interface{}{"SERVER_HOSTNAME": "quay.io"}),
 			},
 		},
-		withComponents([]string{"base", "postgres", "clair", "redis", "objectstorage", "mirror"}),
+		withComponents([]string{"base", "clair", "postgres", "redis", "objectstorage", "mirror"}),
 		nil,
 	},
 }
@@ -371,7 +305,7 @@ func TestInflate(t *testing.T) {
 
 			assert.Contains(objectMeta.GetName(), test.quayRegistry.GetName()+"-", test.name)
 			if !strings.Contains(objectMeta.GetName(), "managed-secret-keys") {
-				assert.Equal(string(test.quayRegistry.Spec.DesiredVersion), objectMeta.GetAnnotations()["quay-version"], test.name)
+				assert.Equal(string(v1.QuayVersionCurrent), objectMeta.GetAnnotations()["quay-version"], test.name)
 			}
 		}
 	}

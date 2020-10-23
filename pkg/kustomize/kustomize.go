@@ -34,7 +34,41 @@ const (
 	configSecretPrefix    = "quay-config-secret"
 	registryHostnameKey   = "quay-registry-hostname"
 	managedFieldGroupsKey = "quay-managed-fieldgroups"
+
+	componentImagePrefix = "COMPONENT_IMAGE_"
 )
+
+// componentImageFor checks for an environment variable indicating which component container image
+// to use. If set, returns a Kustomize image override for the given component.
+func componentImageFor(component string) types.Image {
+	envVarFor := map[string]string{
+		"base":     componentImagePrefix + "QUAY",
+		"clair":    componentImagePrefix + "CLAIR",
+		"redis":    componentImagePrefix + "REDIS",
+		"postgres": componentImagePrefix + "POSTGRES",
+	}
+	defaultImagesFor := map[string]string{
+		"base":     "quay.io/projectquay/quay",
+		"clair":    "quay.io/projectquay/clair",
+		"redis":    "redis",
+		"postgres": "centos/postgresql-10-centos7",
+	}
+
+	imageOverride := types.Image{
+		Name: defaultImagesFor[component],
+	}
+	image := os.Getenv(envVarFor[component])
+	if image != "" {
+		if len(strings.Split(image, "@")) != 2 {
+			panic(envVarFor[component] + " must use manifest digest reference")
+		}
+
+		imageOverride.NewName = strings.Split(image, "@")[0]
+		imageOverride.Digest = strings.Split(image, "@")[1]
+	}
+
+	return imageOverride
+}
 
 func kustomizeDir() string {
 	_, filename, _, _ := runtime.Caller(0)
@@ -47,12 +81,12 @@ func appDir() string {
 	return filepath.Join(kustomizeDir(), "tmp")
 }
 
-func overlayDir(desiredVersion v1.QuayVersion) string {
-	return filepath.Join(kustomizeDir(), "overlays", string(desiredVersion.Stream()), string(desiredVersion))
+func overlayDir() string {
+	return filepath.Join(kustomizeDir(), "overlays", "current")
 }
 
-func upgradeOverlayDir(desiredVersion v1.QuayVersion) string {
-	return filepath.Join(kustomizeDir(), "overlays", string(desiredVersion.Stream()), string(desiredVersion), "upgrade")
+func upgradeOverlayDir() string {
+	return filepath.Join(kustomizeDir(), "overlays", "current", "upgrade")
 }
 
 func check(err error) {
@@ -223,6 +257,16 @@ func KustomizationFor(quay *v1.QuayRegistry, quayConfigFiles map[string][]byte) 
 		}
 	}
 
+	images := []types.Image{}
+	for _, component := range append(quay.Spec.Components, v1.Component{Kind: "base", Managed: true}) {
+		if component.Managed {
+			imageOverride := componentImageFor(component.Kind)
+			if imageOverride.Digest != "" {
+				images = append(images, imageOverride)
+			}
+		}
+	}
+
 	return &types.Kustomization{
 		TypeMeta: types.TypeMeta{
 			APIVersion: types.KustomizationVersion,
@@ -237,6 +281,7 @@ func KustomizationFor(quay *v1.QuayRegistry, quayConfigFiles map[string][]byte) 
 			managedFieldGroupsKey: strings.Join(managedFieldGroups, ","),
 			registryHostnameKey:   string(quayConfigFiles[registryHostnameKey]),
 		},
+		Images: images,
 		// NOTE: Using `vars` in Kustomize is kinda ugly because it's basically templating, so don't abuse them
 		Vars: []types.Var{
 			{
@@ -336,10 +381,10 @@ func Inflate(quay *v1.QuayRegistry, baseConfigBundle *corev1.Secret, secretKeysS
 	check(err)
 
 	var overlay string
-	if quay.Spec.DesiredVersion == quay.Status.CurrentVersion || quay.Spec.DesiredVersion == v1.QuayVersionDev {
-		overlay = overlayDir(quay.Spec.DesiredVersion)
+	if quay.Status.CurrentVersion == "" {
+		overlay = upgradeOverlayDir()
 	} else {
-		overlay = upgradeOverlayDir(quay.Spec.DesiredVersion)
+		overlay = overlayDir()
 	}
 	resources, err := generate(kustomization, overlay, componentConfigFiles)
 	check(err)
