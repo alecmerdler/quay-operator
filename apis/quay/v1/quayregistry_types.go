@@ -39,13 +39,16 @@ const (
 type QuayVersion string
 
 const (
-	QuayVersionCurrent  QuayVersion = "vader"
-	QuayVersionPrevious QuayVersion = ""
+	QuayVersionCurrent  QuayVersion = "wookiee"
+	QuayVersionPrevious QuayVersion = "vader"
+	QuayVersionNone     QuayVersion = ""
 )
 
 // CanUpgrade returns true if the given version can be upgraded to this Operator's synchronized Quay version.
 func CanUpgrade(fromVersion QuayVersion) bool {
-	return fromVersion == QuayVersionCurrent || fromVersion == QuayVersionPrevious
+	return fromVersion == QuayVersionCurrent ||
+		fromVersion == QuayVersionNone ||
+		fromVersion == QuayVersionPrevious
 }
 
 var allComponents = []string{

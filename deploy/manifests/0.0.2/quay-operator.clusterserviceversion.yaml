@@ -4,7 +4,7 @@ metadata:
   annotations:
     capabilities: Full Lifecycle
     categories: Integration & Delivery
-    containerImage: quay.io/alecmerdler/quay-operator@sha256:5ffd2390fb3fabc4b8aa1d5cc47714b10c9335563b3d08015b017a48a7126fd0
+    containerImage: quay.io/alecmerdler/quay-operator@sha256:5d1370d08a641797238ebbf9d275329e1ed5fb50be1edaa4493600a24c36f593
     createdAt: 2020-08-24 00:00:00
     description: Opinionated deployment of Quay on Kubernetes.
     repository: https://github.com/quay/quay-operator
@@ -30,7 +30,7 @@ metadata:
           }
         }
       ]
-  name: quay-operator.v0.0.1
+  name: quay-operator.v0.0.2
   namespace: placeholder
 spec:
   customresourcedefinitions:
@@ -116,7 +116,7 @@ spec:
                   value: centos/postgresql-10-centos7@sha256:de1560cb35e5ec643e7b3a772ebaac8e3a7a2a8e8271d9e91ff023539b4dfb33
                 - name: COMPONENT_IMAGE_REDIS
                   value: redis@sha256:a2cc4dfe6b765749c2b8fc4437dd77525ba411356f92effe3f86a88315e71f51
-                image: quay.io/alecmerdler/quay-operator@sha256:5ffd2390fb3fabc4b8aa1d5cc47714b10c9335563b3d08015b017a48a7126fd0
+                image: quay.io/alecmerdler/quay-operator@sha256:5d1370d08a641797238ebbf9d275329e1ed5fb50be1edaa4493600a24c36f593
                 name: quay-operator
               serviceAccountName: quay-operator
       permissions:
@@ -565,4 +565,5 @@ spec:
     matchLabels:
       alm-owner-quay-operator: quay-operator
       operated-by: quay-operator
-  version: 0.0.1
+  version: 0.0.2
+  replaces: quay-operator.v0.0.1
