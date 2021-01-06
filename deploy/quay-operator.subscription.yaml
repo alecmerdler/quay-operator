@@ -1,11 +1,11 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: quay-tng
+  name: quay-operator
 spec:
-  channel: alpha
+  channel: stable
   installPlanApproval: Automatic
-  name: quay-tng
+  name: quay-operator
   source: quay-operator
   sourceNamespace: openshift-marketplace
-  startingCSV: quay-operator.v0.0.1
+  startingCSV: quay-operator.v2.0.0
