@@ -227,8 +227,9 @@ func BaseConfig() map[string]interface{} {
 		"TAG_EXPIRATION_OPTIONS":             []string{"2w"},
 		"TEAM_RESYNC_STALE_TIME":             "60m",
 		"FEATURE_DIRECT_LOGIN":               true,
-		"FEATURE_BUILD_SUPPORT":              false,
-		"TESTING":                            false,
+		// FIXME(alecmerdler): Set this to `true` when `builder` managed component is used...
+		"FEATURE_BUILD_SUPPORT": false,
+		"TESTING":               false,
 	}
 }
 
@@ -244,6 +245,8 @@ func CustomTLSFor(quay *v1.QuayRegistry, baseConfig map[string]interface{}) ([]b
 
 	svc := quay.GetName() + "-quay-app"
 
+	// TODO(alecmerdler): Check `builds.config.yaml` fieldgroup for `BUILDMAN_HOSTNAME`...
+
 	return cert.GenerateSelfSignedCertKey(
 		fieldGroup.ServerHostname,
 		[]net.IP{},
@@ -251,6 +254,8 @@ func CustomTLSFor(quay *v1.QuayRegistry, baseConfig map[string]interface{}) ([]b
 			svc,
 			strings.Join([]string{svc, quay.GetNamespace(), "svc"}, "."),
 			strings.Join([]string{svc, quay.GetNamespace(), "svc", "cluster", "local"}, "."),
+			// FIXME(alecmerdler): Need to have the `BUILDMAN_HOSTNAME` here as well...
+			"skynet-quay-builder-quay-builder-alecmerdler.apps.dev.quayteam.org",
 		},
 	)
 }

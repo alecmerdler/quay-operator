@@ -6,6 +6,7 @@ crds:
 resources: 
   - ./quay.route.yaml
   - ./config.route.yaml
+  - ./builder.route.yaml
 patchesStrategicMerge:
   # Switch `Service` to `type: ClusterIP`
   - ./quay.service.patch.yaml

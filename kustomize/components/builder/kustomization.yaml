@@ -1,0 +1,5 @@
+# Builder component adds container build support using Kubernetes build nodes.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+# TODO(alecmerdler): Do we need any resources...?
+resources: []

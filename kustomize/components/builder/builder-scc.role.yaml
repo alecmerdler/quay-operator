@@ -1,0 +1,14 @@
+# NOTE(alecmerdler): This needs to be applied to the _build_ cluster, not the Quay app cluster (not always the same).
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: quay-builder-scc
+rules:
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - quay-builder
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - use

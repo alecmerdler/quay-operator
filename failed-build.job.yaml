@@ -1,0 +1,188 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  generateName: 5fbc6178-9e9d-4548-8fd1-f01816de548b-
+  selfLink: >-
+    /apis/batch/v1/namespaces/skynet/jobs/5fbc6178-9e9d-4548-8fd1-f01816de548b-m2s2x
+  resourceVersion: '2736273'
+  name: 5fbc6178-9e9d-4548-8fd1-f01816de548b-m2s2x
+  uid: 9ee32686-8003-47db-b466-3d8bfd1178d8
+  creationTimestamp: '2021-01-11T04:41:58Z'
+  managedFields:
+    - manager: python-requests
+      operation: Update
+      apiVersion: batch/v1
+      time: '2021-01-11T04:41:58Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:generateName': {}
+          'f:labels':
+            .: {}
+            'f:build': {}
+            'f:manager': {}
+            'f:quay-sha': {}
+            'f:time': {}
+        'f:spec':
+          'f:activeDeadlineSeconds': {}
+          'f:backoffLimit': {}
+          'f:completions': {}
+          'f:parallelism': {}
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                .: {}
+                'f:build': {}
+                'f:manager': {}
+                'f:quay-sha': {}
+                'f:time': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"builder"}':
+                  'f:image': {}
+                  'f:terminationMessagePolicy': {}
+                  .: {}
+                  'f:resources':
+                    .: {}
+                    'f:limits':
+                      .: {}
+                      'f:cpu': {}
+                      'f:memory': {}
+                    'f:requests':
+                      .: {}
+                      'f:cpu': {}
+                      'f:memory': {}
+                  'f:env':
+                    .: {}
+                    'k:{"name":"USERDATA"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"VM_MEMORY"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"VM_VOLUME_SIZE"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                  'f:securityContext':
+                    .: {}
+                    'f:privileged': {}
+                  'f:terminationMessagePath': {}
+                  'f:imagePullPolicy': {}
+                  'f:name': {}
+              'f:dnsPolicy': {}
+              'f:automountServiceAccountToken': {}
+              'f:serviceAccount': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:terminationGracePeriodSeconds': {}
+              'f:imagePullSecrets':
+                .: {}
+                'k:{"name":"builder"}':
+                  .: {}
+                  'f:name': {}
+              'f:serviceAccountName': {}
+              'f:enableServiceLinks': {}
+              'f:securityContext': {}
+          'f:ttlSecondsAfterFinished': {}
+  namespace: skynet
+  labels:
+    build: 5fbc6178-9e9d-4548-8fd1-f01816de548b
+    manager: skynet-quay-app-fbd6b7d-2zbh8
+    quay-sha: none
+    time: 2021-01-11-04
+spec:
+  parallelism: 1
+  completions: 1
+  activeDeadlineSeconds: 7200
+  backoffLimit: 6
+  selector:
+    matchLabels:
+      controller-uid: 9ee32686-8003-47db-b466-3d8bfd1178d8
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        build: 5fbc6178-9e9d-4548-8fd1-f01816de548b
+        controller-uid: 9ee32686-8003-47db-b466-3d8bfd1178d8
+        job-name: 5fbc6178-9e9d-4548-8fd1-f01816de548b-m2s2x
+        manager: skynet-quay-app-fbd6b7d-2zbh8
+        quay-sha: none
+        time: 2021-01-11-04
+    spec:
+      restartPolicy: Never
+      serviceAccountName: default
+      imagePullSecrets:
+        - name: builder
+      schedulerName: default-scheduler
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: 30
+      securityContext: {}
+      containers:
+        - name: builder
+          image: 'quay.io/quay/quay-builder-qemu-fedoracoreos:stable'
+          env:
+            - name: USERDATA
+              value: >-
+                {"ignition": {"version": "3.0.0"}, "passwd": {"users":
+                [{"groups": ["sudo", "docker"], "name": "core"}]}, "storage":
+                {"files": [{"path": "/etc/pki/ca-trust/source/anchors/ssl.cert",
+                "contents": {"source":
+                "data:,-----BEGIN%20CERTIFICATE-----%0AMIIEgjCCA2qgAwIBAgIBAjANBgkqhkiG9w0BAQsFADBTMVEwTwYDVQQDDEhza3lu%0AZXQtcXVheS1xdWF5LWJ1aWxkZXItYWxlY21lcmRsZXIuYXBwcy5kZXYucXVheXRl%0AYW0ub3JnLWNhQDE2MTAzMjg4NTEwHhcNMjEwMTExMDAzNDEwWhcNMjIwMTExMDAz%0ANDEwWjBQMU4wTAYDVQQDDEVza3luZXQtcXVheS1xdWF5LWJ1aWxkZXItYWxlY21l%0AcmRsZXIuYXBwcy5kZXYucXVheXRlYW0ub3JnQDE2MTAzMjg4NTEwggEiMA0GCSqG%0ASIb3DQEBAQUAA4IBDwAwggEKAoIBAQC8ZinDS5nRAUMVJ60aIhqnB5Z30mvvHXM2%0AIxUc7CQ/GeiAB%2Bkec5N1ioNqcU09lH%2BTO2ykFMZNqodGVkIbiwevOZDyZNFQ%2Bdyw%0AwAIAzA82MS79sW9GvcktafcmIdjLMn34XKTUzHWB6CiBbuV%2BdEcSfmE/XahQoHwn%0ARlk9gXYqmqSdnQZhHQsHlWP7n6q9Zc6QH6Avnafv7njZXAo7oxLnWf1e1mHles%2BI%0AOJMxCcOUrSxIcBm9EBxatZH1TRfCs0wKq8iNEXRpQXjB93b5P/3Q%2BJZDLRJhsfGe%0AU7NSXGM4n6tmO1ZFYMUP3cPDIc8TFbJr4ePyJuySw5x7GZSt2zFrAgMBAAGjggFi%0AMIIBXjAOBgNVHQ8BAf8EBAMCBaAwEwYDVR0lBAwwCgYIKwYBBQUHAwEwDAYDVR0T%0AAQH/BAIwADAfBgNVHSMEGDAWgBQISsHZDXl4pY51r5MO2EjzT08kajCCAQYGA1Ud%0AEQSB/jCB%2B4I6c2t5bmV0LXF1YXktcXVheS1idWlsZGVyLWFsZWNtZXJkbGVyLmFw%0AcHMuZGV2LnF1YXl0ZWFtLm9yZ4IPc2t5bmV0LXF1YXktYXBwgixza3luZXQtcXVh%0AeS1hcHAucXVheS1idWlsZGVyLWFsZWNtZXJkbGVyLnN2Y4I6c2t5bmV0LXF1YXkt%0AYXBwLnF1YXktYnVpbGRlci1hbGVjbWVyZGxlci5zdmMuY2x1c3Rlci5sb2NhbIJC%0Ac2t5bmV0LXF1YXktYnVpbGRlci1xdWF5LWJ1aWxkZXItYWxlY21lcmRsZXIuYXBw%0Acy5kZXYucXVheXRlYW0ub3JnMA0GCSqGSIb3DQEBCwUAA4IBAQBVJyHgPOaBYAOm%0AqeoxTo0oWnphD2QqaIlti9Xl%2BbGBn2%2BRq90sZg%2BsGA/HDWJrsPf7jWsfPxqaV/9y%0AVMs5rCQnx%2BCmjuErLuztYBsz5IkZgFvzyAh2ngqXiRPr7fqA8O6hoFEVSGDqI2OI%0AxUpOJdowOyEkkSDZkWZs76%2B40dmHunkcMS5UKrMFX0Yi4PV%2BbIcNVuWnrFNMWgCG%0A63iIJJMwRxPYnyfem0SdSn3kJzZpT4nFiSUbAeJQ57%2BUze374j4Bg2gtxRd3objB%0AjLKbbvtjrZMve%2BAMDLvFVg1ExTt%2B9Hcha5eWTfpYXbyt0R3dAOtrrJoqwdI0uH%2BI%0A430ps7jf%0A-----END%20CERTIFICATE-----%0A-----BEGIN%20CERTIFICATE-----%0AMIIDYzCCAkugAwIBAgIBATANBgkqhkiG9w0BAQsFADBTMVEwTwYDVQQDDEhza3lu%0AZXQtcXVheS1xdWF5LWJ1aWxkZXItYWxlY21lcmRsZXIuYXBwcy5kZXYucXVheXRl%0AYW0ub3JnLWNhQDE2MTAzMjg4NTEwHhcNMjEwMTExMDAzNDEwWhcNMjIwMTExMDAz%0ANDEwWjBTMVEwTwYDVQQDDEhza3luZXQtcXVheS1xdWF5LWJ1aWxkZXItYWxlY21l%0AcmRsZXIuYXBwcy5kZXYucXVheXRlYW0ub3JnLWNhQDE2MTAzMjg4NTEwggEiMA0G%0ACSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDA6im3SuchxTv2vxHg/byw0bcl%2B/OV%0ArBpPfDOKnYelRaEgCAmOOMzcJWUGnBeH/P40h5Cgcz8P49bqW9w5mq6GaY1A6HR5%0Ayt2oFfgD%2BNROB4T0VmMD7I57hH1pxX0etrazyXlHlUZlrBYDTqe3n%2BTEOPl7Z2yU%0AWphQ0KhCfxWYBIqYqgOCCub3TVkbMkWyJOzI42APy3G1yEFIyM1zC6iX70ugbDrr%0A5qYEx%2BfN570PjiP%2B91r0S3n9jlAXAwCIACtJ0AqarDCQQDHRxILI8beyrkjB91UT%0AJum1W0OdIwsmqx6Gwt/r79sFgYT9A9pzMaPpWD53UNqODcufJ%2BvHepnrAgMBAAGj%0AQjBAMA4GA1UdDwEB/wQEAwICpDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBQI%0ASsHZDXl4pY51r5MO2EjzT08kajANBgkqhkiG9w0BAQsFAAOCAQEAtozfW1AZ8NaW%0Az41xgsDSMDUgKSmZsYYWFvjHUlp3kHRS8cz/uURMXscNrSx9OFEnAINpPVJBAIqY%0ALFWa6sKd%2BKjPGYQB8nt1fGnEeI1h061h/5iCE%2Bsh5GRL6lgRy3LcXOXi9AOdeaWk%0AsY2sPze03xm6VgOQSPy8X4SibzHMXn8KkttSRdrH2o0%2B9Gc8gdqvGU5bON18hweq%0AlN8P14B57gFwsncBj6GaZOc5pWThmnPn/EjKPh1snADxg2aDUWyAT2FUZDb4SgWk%0Ant7I39j090NbbdQxie4kIai3WeZbdU4DEheJqXosWHRETiT8R9LFqZXoI7cGmMbp%0A2F7nytfdxA%3D%3D%0A-----END%20CERTIFICATE-----%0A"},
+                "mode": 420}, {"path": "/etc/hostname", "contents": {"source":
+                "data:,5fbc6178-9e9d-4548-8fd1-f01816de548b"}, "mode": 420},
+                {"overwrite": true, "path":
+                "/etc/zincati/config.d/90-disable-auto-updates.toml",
+                "contents": {"source":
+                "data:,%5Bupdates%5D%0Aenabled%20%3D%20false"}, "mode": 420},
+                {"path": "/usr/local/bin/disable-aws-metadata.sh", "contents":
+                {"source":
+                "data:,%23%21/bin/bash%0Aiptables%20-t%20nat%20-I%20PREROUTING%20-p%20tcp%20-d%20169.254.169.254%20--dport%2080%20-j%20DNAT%20--to-destination%201.1.1.1"},
+                "mode": 493}, {"path": "/root/overrides.list", "contents":
+                {"source":
+                "data:,TOKEN%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQ4YWQ3MzdlMmM4MzBmMGQxMjNhYTIzMjMyZThhYTI1MTY5ZWU4NzhkN2NlMTE1NGFhOWE0ZDY3MjM3MzkwMGQifQ.eyJpc3MiOiJxdWF5IiwiYXVkIjoic2t5bmV0LXF1YXktYnVpbGRlci1xdWF5LWJ1aWxkZXItYWxlY21lcmRsZXIuYXBwcy5kZXYucXVheXRlYW0ub3JnIiwibmJmIjoxNjEwMzQwMTE4LCJpYXQiOjE2MTAzNDAxMTgsImV4cCI6MTYxMDM0MDYxOCwic3ViIjoiKGFub255bW91cykiLCJhY2Nlc3MiOnt9LCJjb250ZXh0Ijp7InRva2VuX3R5cGUiOiJidWlsZF9qb2JfcmVnaXN0cmF0aW9uIiwiYnVpbGRfaWQiOiI1ZmJjNjE3OC05ZTlkLTQ1NDgtOGZkMS1mMDE4MTZkZTU0OGIiLCJqb2JfaWQiOiJidWlsZG1hbi9wcm9kdWN0aW9uL2J1aWxkaW5nLzVmYmM2MTc4LTllOWQtNDU0OC04ZmQxLWYwMTgxNmRlNTQ4YiIsImV4cGlyYXRpb24iOjUwMH19.d0QDMvc9VBH_W5wl-cpvBqUOHwXZIMt5spF0730lyWDESVfJarWr3RavtyotD7j2jd1UJur54Bc34lRWDbwUpg-xhnrGSipWVaW3yWkNd11SBYW1m4mdnCi0Jq6U5JkbAW6_b5X1AN8mz1Osz0TeFcgaTK4DnIrxvCV6KxjlArxst8kYIQaAYjFS_a55Q_-eKZJHGohty-e1JO6sF-VYty3TJHOAbT41_nC784SPSbFYC0KLpkZ8rzeE4JDCZYuiKx_TmHwDMJMbi7dnnsBxxM-risqeypGO-wrE44xAnY1_TJftshrNhLbPzqX63BidcYGgI-DYeCI4Mb55cvjYYg%0ASERVER%3Dskynet-quay-builder-quay-builder-alecmerdler.apps.dev.quayteam.org%3A55443%0A%23%20TODO%3A%20Remove%20this%20eventually%0AGODEBUG%3Dx509ignoreCN%3D0"},
+                "mode": 420}]}, "systemd": {"units": [{"name":
+                "quay-builder.service", "enabled": true, "contents":
+                "[Unit]\n\nAfter=docker.service\nRequires=docker.service\n\n\n\n\n\n\n[Service]\n\nRestart=no\nTimeoutStartSec=600\nTimeoutStopSec=2000\n\n\n\nExecStartPre=/usr/bin/docker
+                login -u admin -p admin123 quay.io\n\nExecStart=/usr/bin/docker
+                run --rm --net=host --privileged --env-file /root/overrides.list
+                -v /var/run/docker.sock:/var/run/docker.sock -v
+                /etc/pki/ca-trust-source/anchors:/certs --name quay-builder
+                quay.io/alecmerdler/quay-builder:latest
+                \n\nExecStop=/usr/bin/docker stop
+                quay-builder\n\nExecStopPost=/bin/sh -xc \"/bin/sleep 120;
+                /usr/bin/systemctl --no-block
+                poweroff\"\n\n\n[Install]\nWantedBy=multi-user.target"},
+                {"name": "systemd-journal-gatewayd.socket", "enabled": true,
+                "contents": "[Unit]\nDescription=Journal Gateway Service
+                Socket\n[Socket]\nListenStream=/var/run/journald.sock\nService=systemd-journal-gatewayd.service\n[Install]\nWantedBy=sockets.target"},
+                {"name": "disable-aws-metadata.service", "enabled": true,
+                "contents": "[Unit]\nDescription=Disable AWS metadata
+                service\nBefore=network-pre.target\nWants=network-pre.target\n[Service]\nType=oneshot\nExecStart=/usr/local/bin/disable-aws-metadata.sh\nRemainAfterExit=yes\n[Install]\nWantedBy=multi-user.target"},
+                {"name": "machine-lifetime.service", "enabled": true,
+                "contents": "[Unit]\nDescription=Machine Lifetime
+                Service\n[Service]\nType=oneshot\nExecStart=/bin/sh -xc
+                \"/bin/sleep 10800; /usr/bin/systemctl --no-block
+                poweroff\"\n[Install]\nWantedBy=multi-user.target"}]}}
+            - name: VM_MEMORY
+              value: 4G
+            - name: VM_VOLUME_SIZE
+              value: 32G
+          resources:
+            limits:
+              cpu: '1'
+              memory: 5Gi
+            requests:
+              cpu: 500m
+              memory: 3968Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+      automountServiceAccountToken: false
+      serviceAccount: default
+      dnsPolicy: Default
+status: {}

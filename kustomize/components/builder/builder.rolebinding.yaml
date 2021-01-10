@@ -1,0 +1,12 @@
+# NOTE(alecmerdler): This needs to be applied to the _build_ cluster, not the Quay app cluster (not always the same).
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: quay-builder
+subjects:
+- kind: ServiceAccount
+  name: quay-builder
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
