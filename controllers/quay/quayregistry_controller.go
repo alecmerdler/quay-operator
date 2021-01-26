@@ -147,6 +147,7 @@ func (r *QuayRegistryReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error
 		}
 	}
 
+	// FIXME(alecmerdler): Stop using annotations on the `QuayRegistry` to pass information and use a `context` object instead...
 	updatedQuay, err := r.checkRoutesAvailable(updatedQuay.DeepCopy())
 	if v1.ComponentIsManaged(updatedQuay.Spec.Components, "route") && err != nil {
 		msg := fmt.Sprintf("could not check for `Routes` API: %s", err)

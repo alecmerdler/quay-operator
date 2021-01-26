@@ -26,9 +26,9 @@ import (
 )
 
 const (
-	SupportsRoutesAnnotation  = "quay.redhat.com/supports-routes"
-	ClusterHostnameAnnotation = "quay.redhat.com/router-canonical-hostname"
-
+	// FIXME(alecmerdler): Stop using annotations on the `QuayRegistry` to pass information and use a `context` object instead...
+	SupportsRoutesAnnotation           = "quay.redhat.com/supports-routes"
+	ClusterHostnameAnnotation          = "quay.redhat.com/router-canonical-hostname"
 	SupportsObjectStorageAnnotation    = "quay.redhat.com/supports-object-storage"
 	ObjectStorageInitializedAnnotation = "quay.redhat.com/object-storage-initialized"
 	StorageHostnameAnnotation          = "quay.redhat.com/storage-hostname"
