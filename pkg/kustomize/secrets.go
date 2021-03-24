@@ -340,11 +340,14 @@ func clairConfigFor(quay *v1.QuayRegistry, quayHostname, preSharedKey string) []
 			ScanLockRetry:        10,
 			LayerScanConcurrency: 5,
 			Migrations:           true,
+			Airgap:               true,
 		},
 		Matcher: config.Matcher{
 			ConnString:  dbConn,
 			MaxConnPool: 100,
 			Migrations:  true,
+			// FIXME(alecmerdler): Put Clair in offline mode if fetch to vulnerability source fails...
+			DisableUpdaters: true,
 		},
 		Notifier: config.Notifier{
 			ConnString:       dbConn,

@@ -3,6 +3,7 @@ package controllers
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
@@ -35,6 +36,8 @@ const (
 
 	databaseSecretKey = "DATABASE_SECRET_KEY"
 	secretKey         = "SECRET_KEY"
+
+	clairVulnerabilitySource = "www.redhat.com"
 
 	GrafanaDashboardConfigNamespace = "openshift-config-managed"
 )
@@ -232,6 +235,19 @@ func (r *QuayRegistryReconciler) checkMonitoringAvailable(ctx *quaycontext.QuayR
 	r.Log.Info(GrafanaDashboardConfigNamespace + " found")
 
 	ctx.SupportsMonitoring = true
+
+	return ctx, quay, nil
+}
+
+func checkClairAvailable(ctx *quaycontext.QuayRegistryContext, quay *v1.QuayRegistry, rawConfig []byte) (*quaycontext.QuayRegistryContext, *v1.QuayRegistry, error) {
+	ctx.SupportsClairOnline = true
+
+	// TODO: Should we check the HTTP status code to determine if the source is reachable, but not responding correctly?
+	if _, err := http.Get(clairVulnerabilitySource); err != nil {
+		ctx.SupportsClairOnline = false
+
+		return ctx, quay, err
+	}
 
 	return ctx, quay, nil
 }

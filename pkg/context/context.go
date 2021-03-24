@@ -16,6 +16,9 @@ type QuayRegistryContext struct {
 	StorageAccessKey         string
 	StorageSecretKey         string
 
+	// Clair
+	SupportsClairOnline bool
+
 	// Monitoring
 	SupportsMonitoring bool
 
