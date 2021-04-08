@@ -25,7 +25,7 @@ spec:
             name: cluster-service-ca
       containers:
         - name: quay-app-upgrade
-          image: quay.io/projectquay/quay@sha256:46334210eeb21aa6205215d1c4dbc40ea3381887c21a05d0bc47203c8f938987
+          image: quay.io/alecmerdler/quay@sha256:37e52b8ca456c504e993b3d54ce19b9af762208903086bb8b28b85eaa1d2cd08
           env:
             - name: QE_K8S_CONFIG_SECRET
               # FIXME: Using `vars` is kinda ugly because it's basically templating, but this needs to be the generated `Secret` name...
@@ -35,7 +35,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: DEBUGLOG
-              value: "false"
+              value: "true"
             - name: WORKER_COUNT_WEB
               value: "4"
             - name: WORKER_COUNT_SECSCAN

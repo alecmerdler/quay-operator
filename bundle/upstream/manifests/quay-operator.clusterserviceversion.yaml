@@ -148,7 +148,7 @@ spec:
                 - name: QUAY_DEFAULT_BRANDING
                   value: upstream
                 - name: RELATED_IMAGE_COMPONENT_QUAY
-                  value: quay.io/projectquay/quay@sha256:46334210eeb21aa6205215d1c4dbc40ea3381887c21a05d0bc47203c8f938987
+                  value: quay.io/alecmerdler/quay@sha256:37e52b8ca456c504e993b3d54ce19b9af762208903086bb8b28b85eaa1d2cd08
                 - name: RELATED_IMAGE_COMPONENT_CLAIR
                   value: quay.io/projectquay/clair@sha256:5fec3cf459159eabe2e4e1089687e25f638183a7e9bed1ecea8724e0597f8a14
                 - name: RELATED_IMAGE_COMPONENT_POSTGRES

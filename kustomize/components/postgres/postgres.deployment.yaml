@@ -68,3 +68,4 @@ spec:
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/pgsql/data
+          serviceAccountName: quay-database
