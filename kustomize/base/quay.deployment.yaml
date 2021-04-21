@@ -34,7 +34,8 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: DEBUGLOG
-              value: "false"
+              # FIXME(alecmerdler): Debugging
+              value: "true"
             - name: WORKER_COUNT_WEB
               value: "4"
             - name: WORKER_COUNT_SECSCAN
