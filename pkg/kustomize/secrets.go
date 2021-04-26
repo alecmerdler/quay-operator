@@ -184,6 +184,7 @@ func EnsureTLSFor(ctx *quaycontext.QuayRegistryContext, quay *v1.QuayRegistry, t
 		hosts = append(hosts, strings.Split(ctx.BuildManagerHostname, ":")[0])
 	}
 
+	// FIXME(alecmerdler): Experiment *not* generating TLS if `route` is unmanaged...
 	if tlsCert == nil && tlsKey == nil {
 		return cert.GenerateSelfSignedCertKey(routeFieldGroup.ServerHostname, []net.IP{}, hosts)
 	}

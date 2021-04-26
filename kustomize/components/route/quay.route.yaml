@@ -10,5 +10,6 @@ spec:
   port:
     targetPort: https
   tls:
+    # TODO(alecmerdler): Experiment with switching this to "edge" if user does not provide certs...
     termination: passthrough
     insecureEdgeTerminationPolicy: Redirect
