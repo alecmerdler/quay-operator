@@ -477,15 +477,6 @@ func Inflate(ctx *quaycontext.QuayRegistryContext, quay *v1.QuayRegistry, baseCo
 		}
 	}
 
-	log.Info("Ensuring `ssl.cert` and `ssl.key` pair for Quay app TLS")
-	tlsCert, tlsKey, err := EnsureTLSFor(ctx, quay, baseConfigBundle.Data["ssl.cert"], baseConfigBundle.Data["ssl.key"])
-	if err != nil {
-		return nil, err
-	}
-
-	componentConfigFiles["ssl.cert"] = tlsCert
-	componentConfigFiles["ssl.key"] = tlsKey
-
 	kustomization, err := KustomizationFor(ctx, quay, componentConfigFiles)
 	check(err)
 

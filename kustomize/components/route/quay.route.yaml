@@ -8,7 +8,7 @@ spec:
     kind: Service
     name: quay-app
   port:
-    targetPort: https
+    targetPort: http
   tls:
-    termination: passthrough
+    termination: edge
     insecureEdgeTerminationPolicy: Redirect

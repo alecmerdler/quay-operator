@@ -117,7 +117,7 @@ func FieldGroupFor(ctx *quaycontext.QuayRegistryContext, component v1.ComponentK
 		return fieldGroup, nil
 	case v1.ComponentRoute:
 		fieldGroup := &hostsettings.HostSettingsFieldGroup{
-			ExternalTlsTermination: false,
+			ExternalTlsTermination: true,
 			PreferredUrlScheme:     "https",
 			ServerHostname:         ctx.ServerHostname,
 		}
