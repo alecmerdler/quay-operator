@@ -162,6 +162,8 @@ func ModelFor(gvk schema.GroupVersionKind) client.Object {
 		return &corev1.PersistentVolumeClaim{}
 	case schema.GroupVersionKind{Group: "apps", Version: "v1", Kind: "Deployment"}.String():
 		return &apps.Deployment{}
+	case schema.GroupVersionKind{Group: "apps", Version: "v1", Kind: "StatefulSet"}.String():
+		return &apps.StatefulSet{}
 	case schema.GroupVersionKind{Group: "rbac.authorization.k8s.io", Version: "v1beta1", Kind: "Role"}.String():
 		return &rbac.Role{}
 	case schema.GroupVersionKind{Group: "rbac.authorization.k8s.io", Version: "v1beta1", Kind: "RoleBinding"}.String():

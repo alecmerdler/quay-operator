@@ -1,10 +1,9 @@
-# Postgres component adds a Postgres database for Quay to use
+# Postgres component adds a Postgres database for Quay to use.
 apiVersion: kustomize.config.k8s.io/v1alpha1
 kind: Component
 resources: 
   - ./postgres.serviceaccount.yaml
-  - ./postgres.persistentvolumeclaim.yaml
-  - ./postgres.deployment.yaml
+  - ./postgres.statefulset.yaml
   - ./postgres.service.yaml
   - ./init.job.yaml
 secretGenerator:

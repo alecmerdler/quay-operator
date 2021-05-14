@@ -7,8 +7,7 @@ resources:
   - ./clair.deployment.yaml
   - ./clair.horizontalpodautoscaler.yaml
   - ./clair.service.yaml
-  - ./postgres.persistentvolumeclaim.yaml
-  - ./postgres.deployment.yaml
+  - ./postgres.statefulset.yaml
   - ./postgres.service.yaml
 vars:
   - name: CLAIR_SERVICE_HOST

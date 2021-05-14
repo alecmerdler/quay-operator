@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: quay-database
+  labels:
+    quay-component: postgres
+spec:
+  serviceName: "postgres"
+  replicas: 1
+  selector:
+    matchLabels:
+      quay-component: postgres
+  template:
+    metadata:
+      labels:
+        quay-component: postgres
+    spec:
+      serviceAccountName: quay-database
+      containers:
+        - name: postgres
+          image: centos/postgresql-10-centos7@sha256:de1560cb35e5ec643e7b3a772ebaac8e3a7a2a8e8271d9e91ff023539b4dfb33
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-config-secret
+                  key: database-username
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-config-secret
+                  key: database-name
+            - name: POSTGRESQL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-config-secret
+                  key: database-root-password
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-config-secret
+                  key: database-password
+            - name: POSTGRESQL_SHARED_BUFFERS
+              value: 256MB
+            - name: POSTGRESQL_MAX_CONNECTIONS
+              value: "2000"
+          volumeMounts:
+            - name: quay-database
+              mountPath: /var/lib/pgsql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: quay-database
+      labels:
+        quay-component: postgres
+    spec:
+      accessModes: 
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 50Gi
